@@ -16,7 +16,7 @@ const StockSearch = () => {
       setLoading(true);
       setError(null);
 
-      const apiKey = "d0mqsihr01qi78ngkr10d0mqsihr01qi78ngkr1g"; // Replace with your actual Finnhub API key
+      const apiKey = "d0mqvipr01qi78nglc30d0mqvipr01qi78nglc3g"; // Replace with your actual Finnhub API key
       const url = `https://finnhub.io/api/v1/search?q=${encodeURIComponent(
         searchTerm
       )}&token=${apiKey}`;
@@ -40,22 +40,27 @@ const StockSearch = () => {
   }, [searchTerm]);
 
   return (
-    <div>
-      <h1>Search Stocks</h1>
+    <div style={{ fontFamily: "Arial, sans-serif", fontSize: "14px", maxWidth: "350px" }}>
+      <h1 style={{ fontSize: "18px" }}>Search Stocks</h1>
       <input
         type="text"
         placeholder="Search for a stock symbol"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ marginBottom: "10px", padding: "8px", width: "300px" }}
+        style={{
+          marginBottom: "10px",
+          padding: "6px",
+          width: "200px",
+          fontSize: "13px"
+        }}
       />
-      {error && <div style={{ color: "red" }}>Error: {error}</div>}
+      {error && <div style={{ color: "red", fontSize: "13px" }}>Error: {error}</div>}
       {loading && <div>Loading...</div>}
       {!loading && symbols.length === 0 && !error && (
-        <div>No results found</div>
+        <div style={{ fontSize: "13px" }}>No results found</div>
       )}
       {!loading && symbols.length > 0 && (
-        <ul>
+        <ul style={{ paddingLeft: "20px", fontSize: "13px", lineHeight: "1.4" }}>
           {symbols.map((symbol, index) => (
             <li key={index}>
               <strong>{symbol.symbol}</strong> - {symbol.description}
