@@ -5,27 +5,28 @@ const mongoose=require("mongoose");
 const bodyParser=require("body-parser");
 const cors=require("cors");
 const cookieParser = require("cookie-parser");
-const authRoute = require("./Routes/AuthRoute");
+
 
 const {HoldingsModel}=require("./model/HoldingsModel");
 const {OrdersModel}=require("./model/OrdersModel");
 const {PositionsModel}=require("./model/PositionsModel");
+const authRoute = require("./Routes/AuthRoute");
 
-const PORT=process.env.PORT || 3002;
+const PORT=process.env.PORT || 8000;
 const uri=process.env.MONGO_URL;
 const app=express();
 
-app.use(cors());
+
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: ["http://localhost:3002"],
+    origin: ["http://localhost:3001"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-app.use(cors());
-app.use(bodyParser.json());
+
+
 app.use(cookieParser());
 app.use("/",authRoute);
 
@@ -332,6 +333,9 @@ app.use("/",authRoute);
   res.send("Done!");
 
 });*/
+
+console.log("TOKEN_KEY:", process.env.JWT_SECRET);
+console.log("MONGO_URL:", process.env.MONGO_URL);
 app.get("/allHoldings",async(req,res)=>{
   let allHoldings=await HoldingsModel.find({});
   res.json(allHoldings);

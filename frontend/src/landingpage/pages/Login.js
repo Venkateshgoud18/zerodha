@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";  // Assuming you're using react-router for navigation
 
-export default function Signup() {
+export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
-    username: "",
     password: "",
   });
 
@@ -20,51 +18,41 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const response = await fetch("http://localhost:8000/signup", {
+      const response = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
+        credentials: "include", // to send and receive cookies
         body: JSON.stringify(formData),
       });
-  
+
       const data = await response.json();
       setMessage(data.message);
       setSuccess(data.success);
-  
+
       if (data.success) {
-        setFormData({ email: "", username: "", password: "" });
-        // Redirect on successful signup:
-        window.location.href = "http://localhost:3000";
+        // You can redirect or do something on successful login
+        // For example:
+        // window.location.href = "/dashboard";
       }
     } catch (err) {
-      setMessage("Signup failed. Try again later.");
+      setMessage("Login failed. Please try again.");
       setSuccess(false);
     }
   };
-  
 
   return (
     <div>
-      <h2>Signup</h2>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           name="email"
           type="email"
           placeholder="Email"
           value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <br />
-        <input
-          name="username"
-          type="text"
-          placeholder="Username"
-          value={formData.username}
           onChange={handleChange}
           required
         />
@@ -78,19 +66,12 @@ export default function Signup() {
           required
         />
         <br />
-        <button type="submit">Signup</button>
+        <button type="submit">Login</button>
       </form>
 
       {message && (
         <p style={{ color: success ? "green" : "red" }}>{message}</p>
       )}
-
-      <p>
-        Already have an account?{" "}
-        <Link to="/login" style={{ color: "blue", textDecoration: "underline" }}>
-          Login
-        </Link>
-      </p>
     </div>
   );
 }
